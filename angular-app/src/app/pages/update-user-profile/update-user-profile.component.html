@@ -1,0 +1,14 @@
+<mat-card class="content">
+
+  <mat-card-header>
+    <mat-card-title><h1>ユーザネーム登録</h1></mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <mat-form-field class="comment-input">
+      <input [(ngModel)]="newUserName" matInput placeholder="Your name">
+    </mat-form-field>
+    <button (click)="updateUserName()" mat-raised-button color="primary">決定</button>
+  </mat-card-content>
+
+</mat-card>
