@@ -26,13 +26,11 @@ export class SignupComponent {
     .then(created => {
       try{
         sendEmailVerification(created.user).then(() => {
-          alert('E-mailを送信しました');
-          console.log(created.user.displayName);
-          console.log(created.user.emailVerified);
+          alert('認証用のリンクを記載した E-mail を送信しました。リンクにアクセスして認証してください。');
         });
       }catch (e) {
         console.error(e);
-        alert('E-mailの送信に失敗しました');
+        alert('ユーザ登録に失敗しました。すでに登録されているメールアドレスか無効なパスワードが入力されました。');
       }
     });
 
