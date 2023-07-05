@@ -1,0 +1,22 @@
+  <mat-card class="content">
+
+    <mat-card-header>
+      <mat-card-title><h1>アカウント作成</h1></mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <mat-form-field class="comment-input">
+        <input [(ngModel)]="newEmail" matInput placeholder="Email">
+      </mat-form-field>
+      <mat-form-field class="comment-input">
+        <input [(ngModel)]="newPassword" matInput type="password" placeholder="パスワード">
+      </mat-form-field>
+      <mat-card-actions>
+        <button (click)="onSubmit()" mat-raised-button color="primary">送信</button>
+      </mat-card-actions>
+    </mat-card-content>
+    <mat-card-footer>
+      <a routerLink="/signin">ログイン</a>
+    </mat-card-footer>
+
+  </mat-card>

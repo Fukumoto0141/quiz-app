@@ -1,0 +1,26 @@
+<mat-card class="content">
+  <mat-card-header>
+    <mat-card-title><h1>ログイン</h1></mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content *ngIf="isVerified">
+    <mat-form-field class="comment-input">
+      <input [(ngModel)]="email" matInput placeholder="Email">
+    </mat-form-field>
+    <mat-form-field class="comment-input">
+      <input [(ngModel)]="password" matInput type="password" placeholder="パスワード">
+    </mat-form-field>
+    <mat-card-actions>
+      <button (click)="login()" mat-raised-button color="primary">ログイン</button>
+    </mat-card-actions>
+  </mat-card-content>
+
+  <mat-card-content *ngIf="!isVerified">
+    <mat-card-title><h2>本人確認</h2></mat-card-title>
+    送信されたメールから本人確認を行なってください。
+    <button (click)="reload()" mat-raised-button color="primary">ログイン画面へ</button>
+  </mat-card-content>
+  <mat-card-footer>
+    <a routerLink="/signup">アカウント登録</a>
+  </mat-card-footer>
+</mat-card>
