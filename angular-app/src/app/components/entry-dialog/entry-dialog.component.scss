@@ -1,0 +1,23 @@
+//dialog
+.dialog-container {
+  width: 600px;
+  height: 600px;
+  button{
+    height: 100px;
+    width: 250px;
+    border-radius: 50px;
+    font-size: 25px;
+  }
+}
+.dialog-title-font-style {
+  font-size: 25px;
+  font-weight: bold;
+}
+.dialog-actions-container {
+  margin-top: 300px;
+  height: 100px;
+}
+
+h1 {
+  margin: 10px;
+}

@@ -11,8 +11,8 @@ import { Observable } from 'rxjs';
 })
 export class SigninComponent {
 
-  email: string = '';
-  password: string = '';
+  email: string = 'fukukou1256@gmail.com';
+  password: string = 'piyo1234';
   isVerified = true;
 
   constructor(

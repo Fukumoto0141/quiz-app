@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CurrentUserService } from './current-user.service';
+import { OpenDialogService } from './open-dialog.service';
 
-describe('CurrentUserService', () => {
-  let service: CurrentUserService;
+describe('OpenDialogService', () => {
+  let service: OpenDialogService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(CurrentUserService);
+    service = TestBed.inject(OpenDialogService);
   });
 
   it('should be created', () => {

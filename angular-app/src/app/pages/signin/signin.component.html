@@ -5,10 +5,10 @@
 
   <mat-card-content *ngIf="isVerified">
     <mat-form-field class="comment-input">
-      <input [(ngModel)]="email" matInput placeholder="Email">
+      <input [(ngModel)]="email" matInput placeholder="Email" value="fukukou1256@gmail.com">
     </mat-form-field>
     <mat-form-field class="comment-input">
-      <input [(ngModel)]="password" matInput type="password" placeholder="パスワード">
+      <input [(ngModel)]="password" matInput type="password" placeholder="パスワード" value="piyo1234">
     </mat-form-field>
     <mat-card-actions>
       <button (click)="login()" mat-raised-button color="primary">ログイン</button>
