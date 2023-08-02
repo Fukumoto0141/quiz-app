@@ -11,6 +11,7 @@ import { MatCardModule } from '@angular/material/card'; // 追加
 import { MatIconModule } from '@angular/material/icon'; // 追加
 import {MatChipsModule} from '@angular/material/chips';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatDialogModule} from '@angular/material/dialog';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -32,8 +33,9 @@ import { UpdateUserProfileComponent } from './pages/update-user-profile/update-u
 import { MainGameScreenComponent } from './pages/main-game-screen/main-game-screen.component';
 import { AnswerGameScreenComponent } from './pages/answer-game-screen/answer-game-screen.component';
 import { ResultComponent } from './pages/result/result.component';
-
-
+import { EntryDialogComponent } from './components/entry-dialog/entry-dialog.component';
+import { CreateRoomDialogComponent } from './components/create-room-dialog/create-room-dialog.component';
+import { LobbyComponent } from './pages/lobby/lobby.component';
 
 
 
@@ -46,10 +48,14 @@ import { ResultComponent } from './pages/result/result.component';
     UpdateUserProfileComponent,
     MainGameScreenComponent,
     AnswerGameScreenComponent,
-    ResultComponent
+    ResultComponent,
+    EntryDialogComponent,
+    CreateRoomDialogComponent,
+    LobbyComponent
   ],
   imports: [
     MatProgressBarModule,
+    MatDialogModule,
     MatChipsModule,
     FormsModule,
     MatIconModule,

@@ -7,6 +7,7 @@ import { UpdateUserProfileComponent } from './pages/update-user-profile/update-u
 import { MainGameScreenComponent } from './pages/main-game-screen/main-game-screen.component';
 import { AnswerGameScreenComponent } from './pages/answer-game-screen/answer-game-screen.component';
 import { ResultComponent } from './pages/result/result.component';
+import { LobbyComponent } from './pages/lobby/lobby.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/signin', pathMatch: 'full' },
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'game', component: MainGameScreenComponent },
   { path: 'answer', component: AnswerGameScreenComponent },
   { path: 'result', component: ResultComponent },
+  { path: 'lobby', component: LobbyComponent },
 
 ];
 
