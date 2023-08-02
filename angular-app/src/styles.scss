@@ -9,7 +9,7 @@
 $custom-primary: mat.define-palette(palette.$custom-primary);
 // secondary はAngular Material のpalette からlight-blue を指定
 $custom-accent: mat.define-palette(mat.$light-blue-palette, A200, A100, A400);
-$custom-warn: mat.define-palette(mat.$red-palette);
+$custom-warn: mat.define-palette(mat.$green-palette);
 
 $custom-theme: mat.define-light-theme(
   (
