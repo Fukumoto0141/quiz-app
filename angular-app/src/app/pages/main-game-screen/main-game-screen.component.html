@@ -1,7 +1,6 @@
 <div class="enemy-img-container">
 
   <div class="enemy-img">敵</div>
-  <input type="range" [(ngModel)]="value">
 
 </div>
 
@@ -11,24 +10,24 @@
     class="hp-margin hp-size"
     color="warn"
     mode="determinate"
-    [value]="value">
+    [value]="80">
   </mat-progress-bar>
 
   <span class="hp-text">
     <span style="margin-right: 1em;">HP</span>
-    {{value}}/100
+    {{80}}/100
   </span>
 
   <mat-progress-bar
     class="time-margin time-size"
     color="accent"
     mode="determinate"
-    [value]="value">
+    [value]="50">
   </mat-progress-bar>
 
   <span class="time-text">
     <span>time</span>
-    {{value}}s
+    {{50}}s
   </span>
 
 </div>
