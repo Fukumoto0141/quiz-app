@@ -10,6 +10,9 @@ import { MatDividerModule } from '@angular/material/divider'; // 追加
 import { MatCardModule } from '@angular/material/card'; // 追加
 import { MatIconModule } from '@angular/material/icon'; // 追加
 import {MatChipsModule} from '@angular/material/chips';
+import {MatDialogModule} from '@angular/material/dialog';
+
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,6 +31,9 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
 import { SigninComponent } from './pages/signin/signin.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import { UpdateUserProfileComponent } from './pages/update-user-profile/update-user-profile.component';
+import { EntryDialogComponent } from './components/entry-dialog/entry-dialog.component';
+import { CreateRoomDialogComponent } from './components/create-room-dialog/create-room-dialog.component';
+import { LobbyComponent } from './pages/lobby/lobby.component';
 
 
 
@@ -39,9 +45,13 @@ import { UpdateUserProfileComponent } from './pages/update-user-profile/update-u
     TopComponent,
     SigninComponent,
     SignupComponent,
-    UpdateUserProfileComponent
+    UpdateUserProfileComponent,
+    EntryDialogComponent,
+    CreateRoomDialogComponent,
+    LobbyComponent
   ],
   imports: [
+    MatDialogModule,
     MatChipsModule,
     FormsModule,
     MatIconModule,
