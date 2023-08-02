@@ -26,16 +26,6 @@ export class TopComponent {
     private openDialogService: OpenDialogService,
   ){}
 
-  ngOnInit(): void {
-    // if(this.auth.currentUser){
-    //   this.name = this.auth.currentUser.displayName?this.auth.currentUser.displayName:'';
-    // }else{
-    //   this.router.navigateByUrl('/signin');
-    // }
-  }
-
-
-
   openDialog(targetDialog: ComponentType<unknown>): void {
     this.openDialogService.openDialog(targetDialog);
   }
