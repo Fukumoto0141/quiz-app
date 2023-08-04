@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { QuestionsCreationService } from 'src/app/service/questions-creation.service';
 
 @Component({
   selector: 'app-answer-game-screen',
@@ -6,5 +7,19 @@ import { Component } from '@angular/core';
   styleUrls: ['./answer-game-screen.component.scss']
 })
 export class AnswerGameScreenComponent {
-  randomParameters:number = Math.random();
+
+  statement = '';
+  quizCount: number = 0;
+
+  constructor(
+    private questionCreation: QuestionsCreationService
+  ) {}
+
+  ngOnInit(): void {
+    let quizInfo = this.questionCreation.createQuestion();
+    this.statement = quizInfo.statement;
+    this.quizCount = quizInfo.quizCount;
+    console.log(quizInfo)
+  }
+
 }
