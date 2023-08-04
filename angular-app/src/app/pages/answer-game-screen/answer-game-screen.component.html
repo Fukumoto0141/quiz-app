@@ -1,0 +1,32 @@
+<div class="quiz-sentence-container">
+
+  <h1 class="quiz-title">問題１</h1>
+  <p class="quiz-sentence">- 2進数{{randomParameters}}を10進数に変換せよ。</p>
+
+</div>
+
+<div class="answer-form-container">
+
+  <div class="field-button-container">
+
+    <mat-form-field color="accent" class="answer-field-width answer-field-margin">
+      <mat-label></mat-label>
+      <input matInput placeholder="Placeholder">
+    </mat-form-field>
+
+    <button mat-raised-button color="accent">回答</button>
+  </div>
+
+
+  <mat-progress-bar
+    class="time-margin time-size"
+    color="accent"
+    mode="determinate"
+    [value]="80">
+  </mat-progress-bar>
+
+  <span class="time-text">
+    <span>time</span>
+    {{80}}s
+  </span>
+</div>

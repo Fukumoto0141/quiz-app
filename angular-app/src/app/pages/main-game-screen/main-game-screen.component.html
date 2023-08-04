@@ -1,0 +1,33 @@
+<div class="enemy-img-container">
+
+  <div class="enemy-img">敵</div>
+
+</div>
+
+<div class="enemy-info-container">
+
+  <mat-progress-bar
+    class="hp-margin hp-size"
+    color="warn"
+    mode="determinate"
+    [value]="80">
+  </mat-progress-bar>
+
+  <span class="hp-text">
+    <span style="margin-right: 1em;">HP</span>
+    {{80}}/100
+  </span>
+
+  <mat-progress-bar
+    class="time-margin time-size"
+    color="accent"
+    mode="determinate"
+    [value]="50">
+  </mat-progress-bar>
+
+  <span class="time-text">
+    <span>time</span>
+    {{50}}s
+  </span>
+
+</div>
