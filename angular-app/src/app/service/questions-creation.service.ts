@@ -14,9 +14,9 @@ export class QuestionsCreationService {
   createQuestion(){
 
     const questions = QUESTIONS;
-    let questionParameterX :string;
-    let newStatement:string;
-    let newAnswer:string;
+    let questionParameterX: string;
+    let newStatement: string;
+    let newAnswer: string;
 
     let targetQuestion = questions[Math.floor(Math.random() * questions.length)];
 
@@ -28,7 +28,10 @@ export class QuestionsCreationService {
       newAnswer = tmp.toString(2);
 
     }else{
-      questionParameterX = tmp.toString(2).padStart( 8, '0');
+      const binaryDigits: number = 8;
+      const fourDigits: number = 4;
+      questionParameterX = tmp.toString(2).padStart( binaryDigits, '0');
+      questionParameterX = questionParameterX.slice(0, fourDigits) + ' ' + questionParameterX.slice(fourDigits);
       newAnswer = tmp.toString();
 
     }
