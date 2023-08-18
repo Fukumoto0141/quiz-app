@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { QuestionsCreationService } from 'src/app/service/questions-creation.service';
+import { QuizService } from 'src/app/service/quiz.service';
 
 @Component({
   selector: 'app-answer-game-screen',
@@ -10,16 +11,29 @@ export class AnswerGameScreenComponent {
 
   statement = '';
   quizCount: number = 0;
+  answer?: number;
 
   constructor(
-    private questionCreation: QuestionsCreationService
+    private quizService: QuizService
   ) {}
 
   ngOnInit(): void {
-    let quizInfo = this.questionCreation.createQuestion();
-    this.statement = quizInfo.statement;
-    this.quizCount = quizInfo.quizCount;
-    console.log(quizInfo)
+    this.statement = this.quizService.currentQuizStatement;
+    this.quizCount = this.quizService.currentQuizCount;
   }
+
+  checkAnswer(){
+    if(this.quizService.checkAnswer(this.answer? this.answer: -1)){
+      console.log('正解');
+    }else{
+      console.log('不正解');
+    }
+    this.statement = this.quizService.currentQuizStatement;
+    this.quizCount = this.quizService.currentQuizCount;
+
+    this.answer = undefined;
+  }
+
+
 
 }

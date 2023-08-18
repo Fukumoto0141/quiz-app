@@ -14,3 +14,6 @@ export interface newQuestion {
   statement:string;
   answer:string;
 }
+export interface hp {
+  hp: number
+}
