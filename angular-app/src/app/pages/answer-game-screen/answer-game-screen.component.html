@@ -9,14 +9,8 @@
       color="accent"
       class="answer-field-width answer-field-margin"
     >
-      <mat-label></mat-label>
-      <input
-        matInput
-        type="number"
-        maxlength="8"
-        placeholder="回答を入力"
-        [(ngModel)]="answer"
-      />
+      <mat-label>回答を入力</mat-label>
+      <input matInput type="number" maxlength="8" [(ngModel)]="answer" />
     </mat-form-field>
 
     <button mat-raised-button color="accent" (click)="checkAnswer()">

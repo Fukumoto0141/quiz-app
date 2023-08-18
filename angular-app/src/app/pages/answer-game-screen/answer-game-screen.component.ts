@@ -11,7 +11,7 @@ export class AnswerGameScreenComponent {
 
   statement = '';
   quizCount: number = 0;
-  answer = 0;
+  answer?: number;
 
   constructor(
     private quizService: QuizService
@@ -23,13 +23,15 @@ export class AnswerGameScreenComponent {
   }
 
   checkAnswer(){
-    if(this.quizService.checkAnswer(this.answer)){
+    if(this.quizService.checkAnswer(this.answer? this.answer: -1)){
       console.log('正解');
     }else{
       console.log('不正解');
     }
     this.statement = this.quizService.currentQuizStatement;
     this.quizCount = this.quizService.currentQuizCount;
+
+    this.answer = undefined;
   }
 
 
