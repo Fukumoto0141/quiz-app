@@ -1,37 +1,40 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, getDocs } from '@angular/fire/firestore';
+import { DocumentReference, Firestore, addDoc, collection, getDocs } from '@angular/fire/firestore';
+import { rooms, user } from '../question';
+import { Router } from '@angular/router';
+import { Auth } from '@angular/fire/auth';
+import { doc, setDoc } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CreateRoomService {
-
-
   private firestore: Firestore = inject(Firestore);
   private _roomKey: string = '';
 
-
-  constructor() {
-
-  }
-
-
-  createRoomKey(sameKey?: string){
-    if(sameKey){
-
-    }else{
-      this._roomKey = Math.random().toString(32).substring(2);
-    }
-  }
+  constructor(
+    private auth: Auth = inject(Auth),
+    private router: Router
+  ) {}
 
   async createRoom(){
-    this.createRoomKey();
-    //生成れたルームキーが既に存在すればもう一度
-    const roomsDoc = await getDocs(collection(this.firestore, "rooms"));
-    roomsDoc.forEach((doc) => {
-      if(doc.get('roomKey') === this._roomKey) this.createRoomKey();
-    });
+    addDoc(collection(this.firestore, 'rooms'),<rooms>{
+      enemyHp: 0,
+      hostUser: this.auth.currentUser?.uid,
+      startTime: new Date()
+    }).then((documentReference: DocumentReference)=>{
+      this._roomKey = documentReference.id;
+      const uuid: string = this.auth.currentUser? this.auth.currentUser.uid: '';
+      const userDoc = doc(this.firestore, 'rooms', this._roomKey, 'users', uuid);
+      setDoc(userDoc,<user>{
+        name: this.auth.currentUser?.displayName,
+        isHost: true
+      });
+      this.router.navigateByUrl('/lobby');
+    })
+  }
 
-    console.log(this._roomKey)
+  get roomKey(): string{
+    return this._roomKey;
   }
 }
