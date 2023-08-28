@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { QuestionsCreationService } from 'src/app/service/questions-creation.service';
 import { QuizService } from 'src/app/service/quiz.service';
 
 @Component({

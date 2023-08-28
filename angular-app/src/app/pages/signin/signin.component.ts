@@ -27,6 +27,7 @@ export class SigninComponent {
 
   login() {
     signInWithEmailAndPassword(this.auth, this.email, this.password).then(res => {
+
       if(!res.user.emailVerified){//本人確認されていない
         this.isVerified = false;
       }else if(res.user.displayName == null){//ユーザ名登録が済んでいない(初回ログイン)

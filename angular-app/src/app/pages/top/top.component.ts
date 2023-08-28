@@ -1,5 +1,5 @@
 import { Component, Inject, Type, inject } from '@angular/core';
-import { Auth } from '@angular/fire/auth';
+import { Auth, getAuth, onAuthStateChanged } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { EntryDialogComponent } from 'src/app/components/entry-dialog/entry-dialog.component';
@@ -14,7 +14,7 @@ import { OpenDialogService } from 'src/app/service/open-dialog.service';
 })
 export class TopComponent {
 
-  name: string ='';
+  name: string|null ='';
 
   entryDialog = EntryDialogComponent;
   createRoomDialog = CreateRoomDialogComponent;
@@ -24,7 +24,12 @@ export class TopComponent {
     private router: Router,
     public dialog: MatDialog,
     private openDialogService: OpenDialogService,
-  ){}
+  ){
+    const user = this.auth.currentUser;
+      if(user !== null){
+        this.name = user.displayName;
+      }
+  }
 
   openDialog(targetDialog: ComponentType<unknown>): void {
     this.openDialogService.openDialog(targetDialog);
