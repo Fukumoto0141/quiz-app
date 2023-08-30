@@ -15,9 +15,5 @@ export class OpenDialogService {
   openDialog(targetDialog: ComponentType<unknown>): void {
     const dialogRef = this.dialog.open(targetDialog, {
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
   }
 }

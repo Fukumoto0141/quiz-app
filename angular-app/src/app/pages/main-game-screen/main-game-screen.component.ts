@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { Firestore, doc, docData, onSnapshot } from '@angular/fire/firestore';
+import { Firestore, doc, docData, getDoc, onSnapshot } from '@angular/fire/firestore';
 import { Observable, take } from 'rxjs';
 import { hp } from 'src/app/question';
+import { FirestoreClientService } from 'src/app/service/firestore-client.service';
 import { QuizService } from 'src/app/service/quiz.service';
 
 @Component({
@@ -11,14 +12,15 @@ import { QuizService } from 'src/app/service/quiz.service';
 })
 
 export class MainGameScreenComponent {
-
   private firestore: Firestore = inject(Firestore);
-
   value: number = 0;
-  //DBを監視して更新があれば反映させる
-  unsub = onSnapshot(doc(this.firestore, "hp", "IUoZMfJV98TgINSdtigE"), (doc) => {
-    this.value = doc.get('hp');
-    console.log("Current data: ", doc.get('hp'));
-})
 
+  constructor(
+    private firestoreClient: FirestoreClientService
+  ){}
+  //DBを監視して更新があれば反映させる
+  private unsub = onSnapshot(doc(this.firestore, "rooms", this.firestoreClient.roomKey), (doc) => {
+    this.value = doc.get('enemyHp');
+    console.log("Current data: ", doc.get('enemyHp'));
+  })
 }

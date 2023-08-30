@@ -1,6 +1,6 @@
 import { Component, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { CreateRoomService } from 'src/app/service/create-room.service';
+import { FirestoreClientService } from 'src/app/service/firestore-client.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,10 +16,10 @@ export class CreateRoomDialogComponent {
   private _roomKey: string = '';
 
   constructor(
-    private createRoom: CreateRoomService,
+    private firestoreClient: FirestoreClientService
   ){}
 
   roomCreation(){
-    this.createRoom.createRoom();
+    this.firestoreClient.insertRoom();
   }
 }

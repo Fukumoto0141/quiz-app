@@ -1,15 +1,22 @@
 <div class="dialog-container">
-
-  <h1 mat-dialog-title align="center" class="dialog-title-font-style">参加する部屋のキーを入力してください</h1>
+  <h1 mat-dialog-title align="center" class="dialog-title-font-style">
+    参加する部屋のキーを入力してください
+  </h1>
 
   <div mat-dialog-content align="center">
     <mat-form-field>
-      <input matInput>
+      <input matInput [(ngModel)]="key" />
     </mat-form-field>
   </div>
 
   <div mat-dialog-actions align="center" class="dialog-actions-container">
-    <button mat-raised-button color="primary">参加</button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="this.entryRoom()"
+      [mat-dialog-close]
+    >
+      参加
+    </button>
   </div>
-
 </div>
