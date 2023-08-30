@@ -1,31 +1,23 @@
 import { Injectable, inject } from '@angular/core';
 import { hp, questionTypes } from '../question';
 import { QUESTIONS } from '../questions';
-import { Firestore, collection, doc, docData, getDoc, setDoc, updateDoc } from '@angular/fire/firestore';
-import { Observable, async, take } from 'rxjs';
-import { leadingComment } from '@angular/compiler';
+import { FirestoreClientService } from './firestore-client.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuizService {
-  private firestore: Firestore = inject(Firestore);
-  private docRef = doc(this.firestore, 'hp', 'IUoZMfJV98TgINSdtigE');
-
   private _enemyHp: number = 100;
   private _currentQuizCount = 0;
   private _currentQuizStatement: string = '';
   private _currentQuizAnswer: string = '';
 
   constructor(
+    private firestoreCliant: FirestoreClientService
   ) {
-    setDoc(this.docRef, {
-      hp: this._enemyHp
-    })
     this.createQuestion();
   }
-
-
+  //問題文の作成
   createQuestion(){
     const questions = QUESTIONS;
     let questionParameterX: string;
@@ -51,23 +43,20 @@ export class QuizService {
       answer: this._currentQuizAnswer,
     }
   }
-
+  //answerGameComponentで回答ボタンが押された時に呼び出す
+  //入力が空の場合は数値型の−１を引数として受け取る
   checkAnswer(answer: number): boolean{
     const damage = 10;
-    let isCorrect = false
     if(answer.toString() == this._currentQuizAnswer){
       this._enemyHp -= damage;
-
-      setDoc(this.docRef, {
-        hp: this._enemyHp
-      })
-      let hpDoc = docData(this.docRef) as Observable<hp>;
-      isCorrect = true;
+      this.firestoreCliant.updateHp(this._enemyHp);
+      this.createQuestion();
+      return true;
+    }else{
+      this.createQuestion();
+      return false;
     }
-    this.createQuestion();
-    return isCorrect;
   }
-
 
   get currentQuizCount(): number{
     return this._currentQuizCount;

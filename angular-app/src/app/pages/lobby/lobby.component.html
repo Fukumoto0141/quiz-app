@@ -7,40 +7,18 @@
 </div>
 
 <div class="participants-box" style="display: flex">
-  <p>あいうえお</p>
-  <p>かきくけこ</p>
-  <p>さしすせそ</p>
-  <p>あいうえお</p>
-  <p>かきくけこ</p>
-  <p>さしすせそ</p>
-  <p>かきくけこ</p>
-  <p>さしすせそ</p>
-  <p>あいうえお</p>
-  <p>かきくけこ</p>
-  <p>さしすせそ</p>
-  <p>あいうえお</p>
-  <p>かきくけこ</p>
-  <p>さしすせそ</p>
-  <p>かきくけこ</p>
-  <p>さしすせそ</p>
-  <p>あいうえお</p>
-  <p>かきくけこ</p>
-  <p>さしすせそ</p>
-  <p>あいうえお</p>
-  <p>かきくけこ</p>
-  <p>さしすせそ</p>
-  <p>かきくけこ</p>
-  <p>さしすせそ</p>
-  <p>あいうえお</p>
-  <p>かきくけこ</p>
-  <p>さしすせそ</p>
-  <p>あいうえお</p>
-  <p>かきくけこ</p>
-  <p>さしすせそ</p>
-  <p>かきくけこ</p>
-  <p>さしすせそ</p>
+  <p *ngFor="let user of this.users | async">{{ user.name }}</p>
 </div>
 
 <div class="button-container">
-  <button mat-raised-button color="accent" class="start-button">開始</button>
+  <button
+    mat-raised-button
+    (click)="startGame()"
+    color="accent"
+    class="start-button"
+    *ngIf="isHost"
+  >
+    開始
+  </button>
+  <button mat-raised-button (click)="test()"></button>
 </div>

@@ -15,7 +15,7 @@ export interface newQuestion {
   answer:string;
 }
 export interface hp {
-  hp: number
+  enemyHp: number
 }
 export interface rooms {
   enemyHp: number;

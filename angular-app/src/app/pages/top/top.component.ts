@@ -6,6 +6,7 @@ import { EntryDialogComponent } from 'src/app/components/entry-dialog/entry-dial
 import { CreateRoomDialogComponent } from 'src/app/components/create-room-dialog/create-room-dialog.component';
 import { ComponentType } from '@angular/cdk/portal';
 import { OpenDialogService } from 'src/app/service/open-dialog.service';
+import { FirestoreClientService } from 'src/app/service/firestore-client.service';
 
 @Component({
   selector: 'app-top',
@@ -21,14 +22,11 @@ export class TopComponent {
 
   constructor(
     private auth: Auth = inject(Auth),
-    private router: Router,
     public dialog: MatDialog,
     private openDialogService: OpenDialogService,
+    private firestoreClient: FirestoreClientService
   ){
-    const user = this.auth.currentUser;
-      if(user !== null){
-        this.name = user.displayName;
-      }
+    this.name = this.firestoreClient.userName;
   }
 
   openDialog(targetDialog: ComponentType<unknown>): void {
