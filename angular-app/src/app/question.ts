@@ -14,10 +14,7 @@ export interface newQuestion {
   statement:string;
   answer:string;
 }
-export interface hp {
-  enemyHp: number
-}
-export interface rooms {
+export interface room {
   enemyHp: number;
   hostUser: string;
   startTime: Date;

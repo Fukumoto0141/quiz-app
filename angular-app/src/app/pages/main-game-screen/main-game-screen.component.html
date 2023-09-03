@@ -7,25 +7,25 @@
     class="hp-margin hp-size"
     color="warn"
     mode="determinate"
-    [value]="value"
+    [value]="(Hp / startHp) * 100"
   >
   </mat-progress-bar>
 
   <span class="hp-text">
     <span style="margin-right: 1em">HP</span>
-    {{ value }}/100
+    {{ Hp }}/{{ startHp }}
   </span>
 
   <mat-progress-bar
     class="time-margin time-size"
     color="accent"
     mode="determinate"
-    [value]="100"
+    [value]="(remainingTime / starttimeLimit) * 100"
   >
   </mat-progress-bar>
 
   <span class="time-text">
     <span>time</span>
-    {{ 100 }}s
+    {{ remainingTime }}s
   </span>
 </div>

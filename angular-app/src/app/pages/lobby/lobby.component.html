@@ -10,15 +10,18 @@
   <p *ngFor="let user of this.users | async">{{ user.name }}</p>
 </div>
 
+<div class="countdown" [ngStyle]="countFontSize" *ngIf="countdown">
+  {{ countdown }}
+</div>
+
 <div class="button-container">
   <button
     mat-raised-button
-    (click)="startGame()"
+    (click)="hostStartGame()"
     color="accent"
     class="start-button"
     *ngIf="isHost"
   >
     開始
   </button>
-  <button mat-raised-button (click)="test()"></button>
 </div>

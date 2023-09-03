@@ -22,12 +22,12 @@
     class="time-margin time-size"
     color="accent"
     mode="determinate"
-    [value]="80"
+    [value]="(remainingTime / starttimeLimit) * 100"
   >
   </mat-progress-bar>
 
   <span class="time-text">
     <span>time</span>
-    {{ 80 }}s
+    {{ remainingTime }}s
   </span>
 </div>
