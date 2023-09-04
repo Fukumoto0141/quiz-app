@@ -10,10 +10,10 @@ import {  Subject, interval } from 'rxjs';
 export class QuizService {
   private _enemyHp: number = 0;
   private _result: string = '';
-  private _damage: number = 300;
+  private _damage: number = 10;
   //敵HP・制限時間初期値
   private _startHp: number = 300;
-  private _startTimeLimit: number = 20;
+  private _startTimeLimit: number = 180;
   //問題文のプロパティ
   private _currentQuizCount: number = 0;
   private _currentQuizStatement: string = '';
