@@ -1,9 +1,8 @@
-import { Injectable, inject, resolveForwardRef } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import {  DocumentReference, Firestore, addDoc, collection, doc, getDoc, setDoc, updateDoc } from '@angular/fire/firestore';
 import { room, user } from '../question';
 import { Router } from '@angular/router';
-import { QuizService } from './quiz.service';
 
 @Injectable({
   providedIn: 'root'
@@ -93,7 +92,7 @@ export class FirestoreClientService {
       this._enemyHp = hp;
       updateDoc(doc(this.firestore, 'rooms', this._roomKey), {
         'enemyHp': hp
-      })
+      });
     }
     //スタート時間の更新
     async updateTime(): Promise<Date>{

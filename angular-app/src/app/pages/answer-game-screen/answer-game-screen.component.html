@@ -10,7 +10,13 @@
       class="answer-field-width answer-field-margin"
     >
       <mat-label>回答を入力</mat-label>
-      <input matInput type="number" maxlength="8" [(ngModel)]="answer" />
+      <input
+        matInput
+        type="number"
+        maxlength="8"
+        [(ngModel)]="answer"
+        (keydown.enter)="checkAnswer()"
+      />
     </mat-form-field>
 
     <button mat-raised-button color="accent" (click)="checkAnswer()">

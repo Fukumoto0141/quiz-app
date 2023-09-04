@@ -5,6 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { room, user } from 'src/app/question';
 import { FirestoreClientService } from 'src/app/service/firestore-client.service';
 import { QuizService } from 'src/app/service/quiz.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 
@@ -30,7 +31,8 @@ export class LobbyComponent {
     private firestoreClient: FirestoreClientService,
     private quizService: QuizService,
     private firestore: Firestore,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ){
     this.roomKey = this.firestoreClient.roomKey;
     this.users = collectionData(collection(this.firestore, 'rooms', this.roomKey, 'users')) as Observable<user[]>;
@@ -67,5 +69,19 @@ export class LobbyComponent {
       this.quizService.startTimer(startTime);
     });
   }
-
+  copyRoomkey(){
+    navigator.clipboard.writeText(this.roomKey).then(
+      () => {
+        this.toastr.success('クリップボードにコピーされました！');
+        /* clipboard successfully set */
+      },
+      () => {
+        console.log('コピーに失敗しました。');
+        /* clipboard write failed */
+      },
+    );
+  }
+  backTop(){
+    this.router.navigateByUrl('/top');
+  }
 }

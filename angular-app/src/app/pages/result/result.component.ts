@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { FirestoreClientService } from 'src/app/service/firestore-client.service';
+import { QuizService } from 'src/app/service/quiz.service';
 
 @Component({
   selector: 'app-result',
@@ -11,6 +13,8 @@ export class ResultComponent {
   result: string = ''
   constructor(
     private firestoreClient: FirestoreClientService,
+    private router: Router,
+    private quizService: QuizService
   ){}
   ngOnInit(){
     this.roomKey = this.firestoreClient.roomKey;
@@ -21,6 +25,9 @@ export class ResultComponent {
         this.result = '負け';
       }
     })
-
+  }
+  backLobby(){
+    this.quizService.initQuiz();
+    this.router.navigateByUrl('/lobby');
   }
 }

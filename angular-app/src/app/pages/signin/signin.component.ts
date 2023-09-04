@@ -2,7 +2,8 @@ import { Component, inject } from '@angular/core';
 
 import { Auth, onAuthStateChanged, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-signin',
@@ -18,6 +19,7 @@ export class SigninComponent {
   constructor(
     private auth: Auth = inject(Auth),
     private router: Router,
+    private toastr: ToastrService
   ){}
   ngOnInit() {
     if(this.auth.currentUser){//アカウント登録直後のログイン
@@ -26,6 +28,10 @@ export class SigninComponent {
   }
 
   login() {
+    if(!this.email || !this.password) {
+      console.log('a');
+      return;
+    }
     signInWithEmailAndPassword(this.auth, this.email, this.password).then(res => {
 
       if(!res.user.emailVerified){//本人確認されていない
@@ -33,7 +39,7 @@ export class SigninComponent {
       }else if(res.user.displayName == null){//ユーザ名登録が済んでいない(初回ログイン)
         this.router.navigateByUrl('/uup');
       }else{//全てOK、TOP画面へ
-        alert('ログイン成功しました。');
+        this.toastr.success('ログインしました。');
         this.router.navigateByUrl('/top');
       }
     }).catch(res => {
@@ -42,7 +48,6 @@ export class SigninComponent {
 
     });
   }
-
   reload(){
     this.ngOnInit();
   }

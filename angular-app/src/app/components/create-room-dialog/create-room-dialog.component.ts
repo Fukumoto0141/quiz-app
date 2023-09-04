@@ -1,4 +1,5 @@
 import { Component, Injectable } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { FirestoreClientService } from 'src/app/service/firestore-client.service';
 
@@ -12,14 +13,13 @@ import { FirestoreClientService } from 'src/app/service/firestore-client.service
   styleUrls: ['./create-room-dialog.component.scss']
 })
 export class CreateRoomDialogComponent {
-
-  private _roomKey: string = '';
-
   constructor(
-    private firestoreClient: FirestoreClientService
+    private firestoreClient: FirestoreClientService,
+    public dialogRef: MatDialogRef<CreateRoomDialogComponent>,
   ){}
 
   roomCreation(){
+    this.dialogRef.close();
     this.firestoreClient.insertRoom();
   }
 }

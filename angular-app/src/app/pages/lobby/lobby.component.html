@@ -1,7 +1,10 @@
 <div class="top-item-container">
-  <button mat-stroked-button class="back-button">戻る</button>
+  <button mat-stroked-button class="back-button" (click)="backTop()">
+    戻る
+  </button>
   <label
-    ><button mat-stroked-button class="copy-button">コピー</button
+    ><button mat-stroked-button class="copy-button" (click)="copyRoomkey()">
+      コピー</button
     >{{ roomKey }}</label
   >
 </div>

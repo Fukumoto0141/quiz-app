@@ -5,17 +5,12 @@
 
   <div mat-dialog-content align="center">
     <mat-form-field>
-      <input matInput [(ngModel)]="key" />
+      <input matInput [(ngModel)]="key" (keydown.enter)="entryRoom()" />
     </mat-form-field>
   </div>
 
   <div mat-dialog-actions align="center" class="dialog-actions-container">
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="this.entryRoom()"
-      [mat-dialog-close]
-    >
+    <button mat-raised-button color="primary" (click)="entryRoom()">
       参加
     </button>
   </div>

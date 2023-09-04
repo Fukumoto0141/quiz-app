@@ -1,8 +1,8 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { questionTypes } from '../question';
 import { QUESTIONS } from '../questions';
 import { FirestoreClientService } from './firestore-client.service';
-import { Observable, Subject, Subscription, interval } from 'rxjs';
+import {  Subject, interval } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +10,10 @@ import { Observable, Subject, Subscription, interval } from 'rxjs';
 export class QuizService {
   private _enemyHp: number = 0;
   private _result: string = '';
-  private _damage: number = 10;
+  private _damage: number = 300;
   //敵HP・制限時間初期値
   private _startHp: number = 300;
-  private _startTimeLimit: number = 180;
+  private _startTimeLimit: number = 20;
   //問題文のプロパティ
   private _currentQuizCount: number = 0;
   private _currentQuizStatement: string = '';
@@ -97,19 +97,31 @@ export class QuizService {
   }
   //ゲーム終了までのカウントダウン
   timeLimitCount(){
-    let timeLimit: number = this._startTimeLimit;
+    this._remainingTime = this._startTimeLimit;
     const timer = interval(1000).subscribe(() => {
-      this._remainingTime = timeLimit;
       if(this._remainingTime == 0 || this._enemyHp == 0) {
-        this._remainingTime = timeLimit;
         this._timeSub.next(this._remainingTime);
         timer.unsubscribe();
         return;
       }
       this._timeSub.next(this._remainingTime);
-      timeLimit-=1;
+      this._remainingTime-=1;
     });
   }
+  // timeLimitCount(){
+  //   let timeLimit: number = this._startTimeLimit;
+  //   const timer = interval(1000).subscribe(() => {
+  //     this._remainingTime = timeLimit;
+  //     if(this._remainingTime == 0 || this._enemyHp == 0) {
+  //       this._remainingTime = timeLimit;
+  //       this._timeSub.next(this._remainingTime);
+  //       timer.unsubscribe();
+  //       return;
+  //     }
+  //     this._timeSub.next(this._remainingTime);
+  //     timeLimit-=1;
+  //   });
+  // }
 
   get currentQuizCount(): number{
     return this._currentQuizCount;
