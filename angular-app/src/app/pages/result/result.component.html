@@ -1,7 +1,9 @@
 <div class="top-item-container">
-  <button mat-stroked-button class="back-button">戻る</button>
+  <button mat-stroked-button class="back-button" (click)="backLobby()">
+    戻る
+  </button>
 </div>
 
 <div class="win-or-loss-text">
-  勝ち
+  {{ result }}
 </div>

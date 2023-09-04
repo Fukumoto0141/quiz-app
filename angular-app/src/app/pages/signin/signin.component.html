@@ -5,20 +5,37 @@
 
   <mat-card-content *ngIf="isVerified">
     <mat-form-field class="comment-input">
-      <input [(ngModel)]="email" matInput placeholder="Email" value="fukukou1256@gmail.com">
+      <input
+        [(ngModel)]="email"
+        matInput
+        placeholder="Email"
+        value="fukukou1256@gmail.com"
+        (keydown.enter)="login()"
+      />
     </mat-form-field>
     <mat-form-field class="comment-input">
-      <input [(ngModel)]="password" matInput type="password" placeholder="パスワード" value="piyo1234">
+      <input
+        [(ngModel)]="password"
+        matInput
+        type="password"
+        placeholder="パスワード"
+        value="piyo1234"
+        (keydown.enter)="login()"
+      />
     </mat-form-field>
     <mat-card-actions>
-      <button (click)="login()" mat-raised-button color="primary">ログイン</button>
+      <button (click)="login()" mat-raised-button color="primary">
+        ログイン
+      </button>
     </mat-card-actions>
   </mat-card-content>
 
   <mat-card-content *ngIf="!isVerified">
     <mat-card-title><h2>本人確認</h2></mat-card-title>
     送信されたメールから本人確認を行なってください。
-    <button (click)="reload()" mat-raised-button color="primary">ログイン画面へ</button>
+    <button (click)="reload()" mat-raised-button color="primary">
+      ログイン画面へ
+    </button>
   </mat-card-content>
   <mat-card-footer>
     <a routerLink="/signup">アカウント登録</a>

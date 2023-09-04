@@ -4,6 +4,7 @@
 
 @include mat.core();
 
+@import 'ngx-toastr/toastr';
 
 // primary に先程作成した $custom-primary を指定
 $custom-primary: mat.define-palette(palette.$custom-primary);

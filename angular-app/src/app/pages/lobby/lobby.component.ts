@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
 import { Firestore, collection, collectionData, doc, docData, getDocs, onSnapshot, query, where } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { user } from 'src/app/question';
+import { Observable, Subscription } from 'rxjs';
+import { room, user } from 'src/app/question';
 import { FirestoreClientService } from 'src/app/service/firestore-client.service';
+import { QuizService } from 'src/app/service/quiz.service';
+import { ToastrService } from 'ngx-toastr';
+
+
 
 @Component({
   selector: 'app-lobby',
@@ -11,28 +15,73 @@ import { FirestoreClientService } from 'src/app/service/firestore-client.service
   styleUrls: ['./lobby.component.scss']
 })
 export class LobbyComponent {
+  roomInfo: room= {
+    enemyHp: 0,
+    hostUser: '',
+    startTime: new Date()
+  };
   roomKey: string = '';
   isHost: boolean = false;
-  users: Observable<user[]>
+  users: Observable<user[]>;
+  countdown: string = '';
+  countFontSize = {};
+  private TimerSubscription!: Subscription;
+
   constructor(
     private firestoreClient: FirestoreClientService,
+    private quizService: QuizService,
     private firestore: Firestore,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ){
     this.roomKey = this.firestoreClient.roomKey;
-    const userProfileCollection = collection(this.firestore, 'rooms', this.roomKey, 'users');
-    this.users = collectionData(userProfileCollection) as Observable<user[]>;
+    this.users = collectionData(collection(this.firestore, 'rooms', this.roomKey, 'users')) as Observable<user[]>;
+    this.firestoreClient.getRoom(this.roomKey).then(val =>{ this.roomInfo = val; });
   }
   ngOnInit(){
+    this.TimerSubscription = this.quizService._countSub$.subscribe(time =>{
+      if(time.length > 1) {
+        this.countFontSize = {'font-size':'100px'};
+        setTimeout(() => {
+          this.isHost? this.router.navigateByUrl('/game'): this.router.navigateByUrl('/answer');
+          this.TimerSubscription.unsubscribe();
+        }, 1000);
+      }
+      this.countdown = time;
+    });
+
     this.isHost = this.firestoreClient.isHost;
     this.firestoreClient.roomKey = this.roomKey;
+    //ログインしているユーザが参加者の場合のみルームドキュメントのSnapshotインスタンス作成
+    //startTimeフィールドが更新された時のみゲームの開始処理が実行される
+    if(!this.isHost){
+      const unsub = onSnapshot(doc(this.firestore, "rooms", this.firestoreClient.roomKey), (doc) => {
+        let startTime: Date = doc.get('startTime').toDate();
+        if(startTime.getTime() !== this.roomInfo.startTime.getTime()){
+          this.quizService.startTimer(startTime);
+          unsub();
+        }
+      });
+    }
   }
-
-  startGame(){
-    this.router.navigateByUrl('/game')//仮
+  hostStartGame(){
+    this.firestoreClient.updateTime().then(startTime =>{
+      this.quizService.startTimer(startTime);
+    });
   }
-  test(){
-    this.router.navigateByUrl('/answer')//仮
-
+  copyRoomkey(){
+    navigator.clipboard.writeText(this.roomKey).then(
+      () => {
+        this.toastr.success('クリップボードにコピーされました！');
+        /* clipboard successfully set */
+      },
+      () => {
+        console.log('コピーに失敗しました。');
+        /* clipboard write failed */
+      },
+    );
+  }
+  backTop(){
+    this.router.navigateByUrl('/top');
   }
 }

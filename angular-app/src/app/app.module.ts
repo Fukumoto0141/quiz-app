@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon'; // 追加
 import {MatChipsModule} from '@angular/material/chips';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatDialogModule} from '@angular/material/dialog';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -54,6 +55,8 @@ import { LobbyComponent } from './pages/lobby/lobby.component';
     LobbyComponent
   ],
   imports: [
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     MatProgressBarModule,
     MatDialogModule,
     MatChipsModule,

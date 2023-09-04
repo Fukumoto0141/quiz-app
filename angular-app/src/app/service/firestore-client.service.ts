@@ -1,21 +1,28 @@
 import { Injectable, inject } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import {  DocumentReference, Firestore, addDoc, collection, doc, getDoc, setDoc, updateDoc } from '@angular/fire/firestore';
-import { hp, rooms, user } from '../question';
+import { room, user } from '../question';
 import { Router } from '@angular/router';
-import { update } from '@angular/fire/database';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirestoreClientService {
-  private _user: user = {
+  private _userInfo: user = {
     name: '',
     isHost: false
   };
+  private _roomInfo: room = {
+    enemyHp: 0,
+    hostUser: '',
+    startTime: new Date()
+  }
+  private _enemyHp: number = 0;
   private _roomKey: string = '';
   private _uuid: string;
+  // = this.auth.currentUser? this.auth.currentUser.uid: '';
   private _userName: string | null;
+  // = this.auth.currentUser? this.auth.currentUser.displayName: '';
   private _isHost: boolean = false;
 
   constructor(
@@ -29,8 +36,8 @@ export class FirestoreClientService {
 
     //ルームドキュメント作成・初期値挿入(ルーム作成時のみ実行)
     async insertRoom(){
-      addDoc(collection(this.firestore, 'rooms'),<rooms>{
-        enemyHp: 100,
+      addDoc(collection(this.firestore, 'rooms'),<room>{
+        enemyHp: this._enemyHp,
         hostUser: this._uuid,
         startTime: new Date()
       }).then((documentReference: DocumentReference)=>{
@@ -57,20 +64,44 @@ export class FirestoreClientService {
       //doc('firebaseインスタンス', 'コレクションID', 'ルームキー', 'サブコレクションID', 'ユーザID')
       const userDoc = doc(this.firestore, 'rooms', this._roomKey, 'users', this._uuid);
       getDoc(userDoc).then(async value =>{
-        this._user = {
+        this._userInfo = {
           name: await value.get('name'),
           isHost: await value.get('isHost')
         };
-        console.log(this._user);
-        return this._user;
+        console.log(this._userInfo);
+        return this._userInfo;
       })
+    }
+
+    //ルームドキュメント取得
+    async getRoom(key: string): Promise<room>{
+      this._roomKey = key;
+      //doc('firebaseインスタンス', 'コレクションID', 'ルームキー')
+      const roomDoc = doc(this.firestore, 'rooms', this._roomKey);
+      const docVal = await getDoc(roomDoc);
+      this._roomInfo = {
+        enemyHp: docVal.get('enemyHp'),
+        hostUser: docVal.get('hostUser'),
+        startTime: docVal.get('startTime').toDate()
+      };
+      return  this._roomInfo;
     }
 
     //敵のHPを更新
     updateHp(hp: number){
+      this._enemyHp = hp;
       updateDoc(doc(this.firestore, 'rooms', this._roomKey), {
         'enemyHp': hp
-      })
+      });
+    }
+    //スタート時間の更新
+    async updateTime(): Promise<Date>{
+      let time = new Date();
+      let startTime = new Date(time.setSeconds(time.getSeconds() + 5));
+      const docVal = updateDoc(doc(this.firestore, 'rooms', this._roomKey), {
+        'startTime': startTime
+      });
+      return startTime;
     }
 
     get roomKey(): string{
