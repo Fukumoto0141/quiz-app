@@ -3,6 +3,7 @@ import { questionTypes } from '../question';
 import { QUESTIONS } from '../questions';
 import { FirestoreClientService } from './firestore-client.service';
 import {  Subject, interval } from 'rxjs';
+import{ DAMAGE, ONE_MILLISECOND, START_HP, START_QUIZ_COUNT, START_TIME_LIMIT, THOUSAND_MILLISECOND } from '../const'
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +11,6 @@ import {  Subject, interval } from 'rxjs';
 export class QuizService {
   private _enemyHp: number = 0;
   private _result: string = '';
-  private _damage: number = 10;
-  //敵HP・制限時間初期値
-  private _startHp: number = 300;
-  private _startTimeLimit: number = 180;
   //問題文のプロパティ
   private _currentQuizCount: number = 0;
   private _currentQuizStatement: string = '';
@@ -28,7 +25,7 @@ export class QuizService {
   public _timeSub$ = this._timeSub.asObservable();
 
   constructor(
-    private firestoreCliant: FirestoreClientService,
+    private firestoreCliant: FirestoreClientService
   ) {
     this.createQuestion();
     this.initQuiz();
@@ -36,8 +33,11 @@ export class QuizService {
 
   //初期化
   initQuiz(){
-    this._enemyHp = this._startHp;
-    this.firestoreCliant.updateHp(this._startHp);
+    this._enemyHp = START_HP;
+    this.firestoreCliant.updateHp(START_HP);
+    this._remainingTime = START_TIME_LIMIT;
+    this._currentQuizCount = START_QUIZ_COUNT;
+    this.result = '';
   }
   //問題文の作成
   private createQuestion(){
@@ -69,11 +69,12 @@ export class QuizService {
   //入力が空の場合は数値型の−１を引数として受け取り不正解となる
   checkAnswer(answer: number): boolean{
     if(answer.toString() == this._currentQuizAnswer){
-      this._enemyHp -= this._damage;
-      this.firestoreCliant.updateHp(this._enemyHp);
+      this._enemyHp -= DAMAGE;
+      this.firestoreCliant.updateHp(-(DAMAGE));
       this.createQuestion();
       return true;
     }else{
+      this.firestoreCliant.updateHp(0);
       this.createQuestion();
       return false;
     }
@@ -81,24 +82,23 @@ export class QuizService {
   //ゲーム開始までのカウントダウン
   startTimer(startTime: Date){
     const start: number = startTime.getTime();
-    const timer = interval(1).subscribe(() => {
+    const timer = interval(ONE_MILLISECOND).subscribe(() => {
       const now: number = new Date().getTime();
       const remainTime: number = start - now;
-      if(remainTime <= 1000) {
+      if(remainTime <= THOUSAND_MILLISECOND) {
         timer.unsubscribe();
         this._timeCount = 'スタート';
         this._countSub.next(this._timeCount);
         return;
       }
-      const difSec  = Math.floor(remainTime / 1000);
+      const difSec  = Math.floor(remainTime / THOUSAND_MILLISECOND);
       this._timeCount = difSec.toString();
       this._countSub.next(this._timeCount);
     });
   }
   //ゲーム終了までのカウントダウン
   timeLimitCount(){
-    this._remainingTime = this._startTimeLimit;
-    const timer = interval(1000).subscribe(() => {
+    const timer = interval(THOUSAND_MILLISECOND).subscribe(() => {
       if(this._remainingTime == 0 || this._enemyHp == 0) {
         this._timeSub.next(this._remainingTime);
         timer.unsubscribe();
@@ -108,20 +108,6 @@ export class QuizService {
       this._remainingTime-=1;
     });
   }
-  // timeLimitCount(){
-  //   let timeLimit: number = this._startTimeLimit;
-  //   const timer = interval(1000).subscribe(() => {
-  //     this._remainingTime = timeLimit;
-  //     if(this._remainingTime == 0 || this._enemyHp == 0) {
-  //       this._remainingTime = timeLimit;
-  //       this._timeSub.next(this._remainingTime);
-  //       timer.unsubscribe();
-  //       return;
-  //     }
-  //     this._timeSub.next(this._remainingTime);
-  //     timeLimit-=1;
-  //   });
-  // }
 
   get currentQuizCount(): number{
     return this._currentQuizCount;
@@ -129,14 +115,8 @@ export class QuizService {
   get currentQuizStatement(): string{
     return this._currentQuizStatement;
   }
-  get startTimeLimit(): number{
-    return this._startTimeLimit;
-  }
   get result(): string{
     return this._result;
-  }
-  get startHp(): number {
-    return this._startHp;
   }
 
   set result(result: string){

@@ -1,8 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
-import {  DocumentReference, Firestore, addDoc, collection, doc, getDoc, setDoc, updateDoc } from '@angular/fire/firestore';
+import {  DocumentReference, Firestore, addDoc, collection, doc, getDoc, increment, setDoc, updateDoc } from '@angular/fire/firestore';
 import { room, user } from '../question';
 import { Router } from '@angular/router';
+import { START_HP } from '../const';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,6 @@ export class FirestoreClientService {
     hostUser: '',
     startTime: new Date()
   }
-  private _enemyHp: number = 0;
   private _roomKey: string = '';
   private _uuid: string;
   // = this.auth.currentUser? this.auth.currentUser.uid: '';
@@ -37,7 +37,7 @@ export class FirestoreClientService {
     //ルームドキュメント作成・初期値挿入(ルーム作成時のみ実行)
     async insertRoom(){
       addDoc(collection(this.firestore, 'rooms'),<room>{
-        enemyHp: this._enemyHp,
+        enemyHp: START_HP,
         hostUser: this._uuid,
         startTime: new Date()
       }).then((documentReference: DocumentReference)=>{
@@ -89,9 +89,8 @@ export class FirestoreClientService {
 
     //敵のHPを更新
     updateHp(hp: number){
-      this._enemyHp = hp;
       updateDoc(doc(this.firestore, 'rooms', this._roomKey), {
-        'enemyHp': hp
+        'enemyHp': hp<=0?increment(hp): hp
       });
     }
     //スタート時間の更新

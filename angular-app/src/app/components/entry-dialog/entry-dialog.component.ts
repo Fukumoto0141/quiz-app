@@ -24,6 +24,7 @@ export class EntryDialogComponent {
 
   entryRoom(){
     this.dialogRef.close();
+    this.firestoreClient.roomKey = this.key;
     this.firestoreClient.putUser(this.key, false);
     this.router.navigateByUrl('/lobby');
   }
