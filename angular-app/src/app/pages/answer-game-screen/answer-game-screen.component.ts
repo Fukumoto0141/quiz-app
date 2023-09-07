@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Firestore, doc, onSnapshot } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { START_TIME_LIMIT } from 'src/app/const';
 import { FirestoreClientService } from 'src/app/service/firestore-client.service';
 import { QuizService } from 'src/app/service/quiz.service';
 
@@ -11,22 +12,22 @@ import { QuizService } from 'src/app/service/quiz.service';
   styleUrls: ['./answer-game-screen.component.scss']
 })
 export class AnswerGameScreenComponent {
+  statement:string = '';
+  quizCount: number = 0;
+  answer?: number;
+  remainingTime: number = 0;
+  progressVal: number = 0;
   private TimeLimitSubscription!: Subscription;
+  //DBの更新を監視・反映させる
   private unsub = onSnapshot(doc(this.firestore, "rooms", this.firestoreClientService.roomKey), (doc) => {
     let Hp: number= doc.get('enemyHp');
     if(Hp <= 0){
       this.unsub();
       this.TimeLimitSubscription.unsubscribe();
-      this.quizService.result = '勝ち';
+      this.quizService.result = '撃破！';
       this.router.navigateByUrl('/result');
     }
   });
-
-  statement:string = '';
-  quizCount: number = 0;
-  answer?: number;
-  remainingTime: number = 0;
-  starttimeLimit: number = this.quizService.startTimeLimit;
 
   constructor(
     private firestoreClientService: FirestoreClientService,
@@ -38,16 +39,18 @@ export class AnswerGameScreenComponent {
   }
 
   ngOnInit(): void {
+    //制限時間をテンプレートに反映
     this.TimeLimitSubscription = this.quizService._timeSub$.subscribe(time =>{
-      if(time == 0){
+      this.remainingTime = time;
+      this.progressVal = (time/START_TIME_LIMIT) * 100;
+      if(time <= 0){
         setTimeout(() => {
           this.TimeLimitSubscription.unsubscribe();
           this.unsub();
-          this.quizService.result = '負け';
+          this.quizService.result = '撃破失敗...';
           this.router.navigateByUrl('/result');
         }, 1000);
       }
-      this.remainingTime = time;
     });
     this.statement = this.quizService.currentQuizStatement;
     this.quizCount = this.quizService.currentQuizCount;

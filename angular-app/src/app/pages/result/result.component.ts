@@ -18,13 +18,14 @@ export class ResultComponent {
   ){}
   ngOnInit(){
     this.roomKey = this.firestoreClient.roomKey;
-    let room = this.firestoreClient.getRoom(this.roomKey).then(val =>{
-      if(val.enemyHp == 0) {
-        this.result = '勝ち';
-      }else{
-        this.result = '負け';
-      }
-    })
+    // let room = this.firestoreClient.getRoom(this.roomKey).then(val =>{
+    //   if(val.enemyHp <= 0) {
+    //     this.result = '撃破！';
+    //   }else{
+    //     this.result = '撃破失敗...';
+    //   }
+    // })
+    this.result = this.quizService.result;
   }
   backLobby(){
     this.quizService.initQuiz();
