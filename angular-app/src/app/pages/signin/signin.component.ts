@@ -39,7 +39,7 @@ export class SigninComponent {
       }else if(res.user.displayName == null){//ユーザ名登録が済んでいない(初回ログイン)
         this.router.navigateByUrl('/uup');
       }else{//全てOK、TOP画面へ
-        this.toastr.success('ログインしました。');
+        this.toastr.success('ログインしました。','',{timeOut: 1000});
         this.router.navigateByUrl('/top');
       }
     }).catch(res => {
@@ -50,5 +50,6 @@ export class SigninComponent {
   }
   reload(){
     this.ngOnInit();
+    this.isVerified = true;
   }
 }

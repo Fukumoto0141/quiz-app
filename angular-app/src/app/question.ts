@@ -21,5 +21,12 @@ export interface room {
 }
 export interface user {
   name: string;
-  isHost: boolean
+  isHost: boolean;
+  personalColor: number;
+}
+export interface damageLog{
+  damage: string;
+  userName: string;
+  style?: Record<string, string>;
+  personalColor?: number;
 }

@@ -1,7 +1,7 @@
 import { Component, Inject, Type, inject } from '@angular/core';
 import { Auth, getAuth, onAuthStateChanged } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
+import { DialogPosition, MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { EntryDialogComponent } from 'src/app/components/entry-dialog/entry-dialog.component';
 import { CreateRoomDialogComponent } from 'src/app/components/create-room-dialog/create-room-dialog.component';
 import { ComponentType } from '@angular/cdk/portal';
@@ -16,6 +16,13 @@ import { FirestoreClientService } from 'src/app/service/firestore-client.service
 export class TopComponent {
 
   name: string|null ='';
+  TopDialigConfig: MatDialogConfig = {
+    backdropClass: 'backdrop',
+    position: <DialogPosition>{top:'min(50svh, 50vw)'},
+    panelClass: 'pane',
+    width: 'calc(80vw + 40px)',
+    minWidth: 'calc(80vw + 20px)'
+  }
 
   entryDialog = EntryDialogComponent;
   createRoomDialog = CreateRoomDialogComponent;
@@ -30,6 +37,6 @@ export class TopComponent {
   }
 
   openDialog(targetDialog: ComponentType<unknown>): void {
-    this.openDialogService.openDialog(targetDialog);
+    this.openDialogService.openDialog(targetDialog,this.TopDialigConfig);
   }
 }

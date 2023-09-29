@@ -1,18 +1,36 @@
 <div class="dialog-container">
-  <h1 mat-dialog-title align="center" class="dialog-title-font-style">
-    部屋を作成しますか
-  </h1>
-
-  <div mat-dialog-content></div>
-
-  <div mat-dialog-actions align="center" class="dialog-actions-container">
+  <h1 class="">部屋を作成しますか▼</h1>
+  <mat-dialog-actions>
     <button
       mat-raised-button
-      color="accent"
-      cdkFocusInitial
       (click)="roomCreation()"
+      cdkFocusInitial
+      class="left-spacer-yes-button"
     >
-      作成
+      <span
+        [ngClass]="{ 'show-cursor': showCursor }"
+        class="cursor-hidden"
+        style="visibility: hidden"
+        >▶︎</span
+      >
+      はい
     </button>
-  </div>
+
+    <button
+      mat-raised-button
+      mat-dialog-close
+      (mouseover)="showCursor = false"
+      (mouseout)="showCursor = true"
+      class="left-spacer-no-button"
+    >
+      <span
+        [ngClass]="{ 'show-cursor': !showCursor }"
+        class="cursor-hidden"
+        style="visibility: hidden"
+      >
+        ▶︎
+      </span>
+      いいえ
+    </button>
+  </mat-dialog-actions>
 </div>

@@ -1,22 +1,18 @@
-<mat-chip-listbox>
-  <mat-chip>{{ name }}</mat-chip>
-</mat-chip-listbox>
+<div class="page-size">
+  <div class="top-menu">
+    <div class="title">binaryQuestOnline</div>
+    <mat-chip class="user-name-chip">{{ name }}</mat-chip>
+  </div>
 
-<div>
-  <div class="container">
-    <button
-      mat-raised-button
-      color="accent"
-      (click)="openDialog(this.createRoomDialog)"
-    >
-      部屋作成
-    </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="openDialog(this.entryDialog)"
-    >
-      部屋参加
-    </button>
+  <div class="main-screen">
+    <div class="actions-container">
+      <div (click)="openDialog(this.createRoomDialog)" class="button font-red">
+        <span class="button-text"> 部屋作成 </span>
+      </div>
+
+      <div (click)="openDialog(this.entryDialog)" class="button font-yellow">
+        <span class="button-text"> 部屋参加 </span>
+      </div>
+    </div>
   </div>
 </div>

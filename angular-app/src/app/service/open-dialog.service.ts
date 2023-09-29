@@ -1,6 +1,6 @@
 import { ComponentType } from '@angular/cdk/portal';
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { DialogPosition, MAT_DIALOG_DATA, MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 
 @Injectable({
@@ -10,10 +10,10 @@ export class OpenDialogService {
 
   constructor(
     public dialog: MatDialog,
+
   ) { }
 
-  openDialog(targetDialog: ComponentType<unknown>): void {
-    const dialogRef = this.dialog.open(targetDialog, {
-    });
+  openDialog(targetDialog: ComponentType<unknown>,dialogConfig:MatDialogConfig): void {
+    const dialogRef = this.dialog.open(targetDialog, dialogConfig);
   }
 }

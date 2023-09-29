@@ -6,6 +6,9 @@
 
 @import 'ngx-toastr/toastr';
 
+//フォント
+@import url('https://fonts.googleapis.com/css2?family=DotGothic16&family=VT323&display=swap');
+
 // primary に先程作成した $custom-primary を指定
 $custom-primary: mat.define-palette(palette.$custom-primary);
 // secondary はAngular Material のpalette からlight-blue を指定
@@ -26,10 +29,24 @@ $custom-theme: mat.define-light-theme(
 
 
 html, body {
-  height: 100%;
-  width: 100%;
+  font-family: 'DotGothic16', sans-serif;
+  width: 100vw;
+  height: 100svh;
+  overflow: hidden;
+  background-image: url(/assets/images/733900.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  touch-action: none;
 }
 body {
+  font-family: 'DotGothic16', sans-serif;
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  touch-action: none;
+
   }
+:root {
+  font-family: 'DotGothic16', sans-serif;
+  touch-action: none;
+}

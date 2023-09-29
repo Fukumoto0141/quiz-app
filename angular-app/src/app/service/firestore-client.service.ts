@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import {  DocumentReference, Firestore, addDoc, collection, doc, getDoc, increment, setDoc, updateDoc } from '@angular/fire/firestore';
-import { room, user } from '../question';
+import { damageLog, room, user } from '../question';
 import { Router } from '@angular/router';
 import { START_HP } from '../const';
 
@@ -11,7 +11,8 @@ import { START_HP } from '../const';
 export class FirestoreClientService {
   private _userInfo: user = {
     name: '',
-    isHost: false
+    isHost: false,
+    personalColor: 0
   };
   private _roomInfo: room = {
     enemyHp: 0,
@@ -51,11 +52,13 @@ export class FirestoreClientService {
     async putUser(key: string, isHost: boolean){
       this._roomKey = key;
       this._isHost = isHost;
+      this._userInfo = {
+        name: this.auth.currentUser?.displayName? this.auth.currentUser.displayName: '',
+        isHost: isHost,
+        personalColor: (Math.random() * 360)
+      };
       const userDoc = await doc(this.firestore, 'rooms', this._roomKey, 'users', this._uuid);
-      setDoc(userDoc,<user>{
-        name: this.auth.currentUser?.displayName,
-        isHost: isHost
-      })
+      setDoc(userDoc,this._userInfo)
     }
 
     //自身のユーザドキュメント取得
@@ -66,9 +69,9 @@ export class FirestoreClientService {
       getDoc(userDoc).then(async value =>{
         this._userInfo = {
           name: await value.get('name'),
-          isHost: await value.get('isHost')
+          isHost: await value.get('isHost'),
+          personalColor: await value.get('personalColor')
         };
-        console.log(this._userInfo);
         return this._userInfo;
       })
     }
@@ -92,7 +95,10 @@ export class FirestoreClientService {
       updateDoc(doc(this.firestore, 'rooms', this._roomKey), {
         'enemyHp': hp<=0?increment(hp): hp
       });
+      //非ダメのログを追加
+      if(hp<=0) this.putDamageLog(hp?hp.toString():'miss');
     }
+
     //スタート時間の更新
     async updateTime(): Promise<Date>{
       let time = new Date();
@@ -101,6 +107,18 @@ export class FirestoreClientService {
         'startTime': startTime
       });
       return startTime;
+    }
+
+    //ダメージログ挿入 rooms/uid/damageLog
+    //hp更新で呼ばれる
+    private async putDamageLog(damage: string){
+      const damageLogDoc = await collection(this.firestore, 'rooms', this._roomKey, 'damageLog');
+      addDoc(damageLogDoc,<damageLog>{
+        damage: damage,
+        userName: this.auth.currentUser?.displayName,
+        damagedAt: new Date(),
+        personalColor: this._userInfo.personalColor
+      })
     }
 
     get roomKey(): string{

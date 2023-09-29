@@ -1,22 +1,81 @@
 .dialog-container {
-  width: 600px;
-  height: 600px;
+  position: relative;
+  margin: 20px;
+
+  width: calc(80vw - 40px);
+  min-width: calc(80vw - 20px);
+  height: 45svh;
+
+  background-color: #000000;
+
+  h1 {
+    color: #ffffff;
+    font-family: 'DotGothic16', sans-serif;
+    font-size: max(3vw,3.5svh);
+    font-weight: bold;
+    padding: 3vw;
+    margin: 0;
+  }
+  span{
+    display: flex;
+    flex-wrap: nowrap;
+    color: #ffffff;
+    font-family: 'DotGothic16', sans-serif;
+    font-size: max(3vw,3svh);
+    font-weight: bold;
+  }
+
+  mat-dialog-actions{
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .show-cursor{
+    visibility: visible !important;
+  }
+  .cursor-hidden{
+    visibility: hidden;
+  }
+
   button{
-    height: 100px;
-    width: 250px;
-    border-radius: 50px;
-    font-size: 25px;
+    min-width: 120px;
+    margin-top: max(3vw,3svh);
+    height: max(6vw,6svh);
+    max-height: 70px;
+    background-color: #00000000 !important;
+    margin-right: auto;
+    color: #ffffff !important;
+    font-family: 'DotGothic16', sans-serif;
+    font-size: max(3vw,3svh);
+    font-weight: bold;
   }
 }
-.dialog-title-font-style {
-  font-size: 25px;
-  font-weight: bold;
+
+.left-spacer-yes-button{
+  padding-left: 12vw;
 }
+.left-spacer-no-button{
+  padding-left: 11vw;
+}
+
 .dialog-actions-container {
   margin-top: 300px;
   height: 100px;
 }
 
-h1 {
-  margin: 10px;
+.backdrop {
+  background-color: rgba(255, 255, 255, 0);
+}
+
+
+.pane{
+  .mdc-dialog__surface::before {
+    border: 10px solid #000000;
+    border-radius: 20px;
+    // background-color: rgb(255, 255, 255);
+  }
+  .mat-mdc-dialog-container .mdc-dialog__surface {
+    border-radius: 20px;
+    // background-color: rgb(255, 230, 0);
+  }
 }

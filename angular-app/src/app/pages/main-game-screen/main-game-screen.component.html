@@ -1,31 +1,45 @@
-<div class="enemy-img-container">
-  <div class="enemy-img">敵</div>
+<div class="main-screen background-img">
+  <div class="hp-info-container">
+    <mat-progress-bar
+      class="hp-size"
+      color="warn"
+      mode="determinate"
+      [value]="progressHP"
+    >
+    </mat-progress-bar>
+
+    <div class="hp-text">
+      HP
+      <div class="current-hp-container">{{ Hp }}</div>
+      /
+      <div class="max-hp-container">{{ startHP }}</div>
+    </div>
+  </div>
+
+  <div class="enemy-img" (click)="test()">
+    <ng-container *ngFor="let damage of damageLog">
+      <span class="damage-text" [ngStyle]="damage.style">
+        {{ damage.damage
+        }}<span class="user-name-text">
+          <span class="slash-color"> /</span>{{ damage.userName }}
+        </span>
+      </span>
+    </ng-container>
+  </div>
 </div>
 
-<div class="enemy-info-container">
+<div class="time-info-container">
   <mat-progress-bar
-    class="hp-margin hp-size"
-    color="warn"
-    mode="determinate"
-    [value]="progressHP"
-  >
-  </mat-progress-bar>
-
-  <span class="hp-text">
-    <span style="margin-right: 1em">HP</span>
-    {{ Hp }}/{{ startHP }}
-  </span>
-
-  <mat-progress-bar
-    class="time-margin time-size"
+    class="time-size"
     color="accent"
     mode="determinate"
     [value]="progressTime"
   >
   </mat-progress-bar>
 
-  <span class="time-text">
-    <span>time</span>
-    {{ remainingTime }}s
-  </span>
+  <div class="time-text">
+    time
+    <div>{{ remainingTime }}</div>
+    s
+  </div>
 </div>

@@ -1,14 +1,23 @@
-<mat-card class="content">
+<div class="page-size">
+  <mat-card class="content">
+    <mat-card-content class="field-container">
+      <mat-card-title class="title"><h2>ユーザネーム登録</h2></mat-card-title>
 
-  <mat-card-header>
-    <mat-card-title><h1>ユーザネーム登録</h1></mat-card-title>
-  </mat-card-header>
+      <mat-form-field class="comment-input">
+        <input
+          [(ngModel)]="newUserName"
+          matInput
+          maxlength="5"
+          placeholder="名前(5文字まで)"
+        />
+      </mat-form-field>
 
-  <mat-card-content>
-    <mat-form-field class="comment-input">
-      <input [(ngModel)]="newUserName" matInput placeholder="Your name">
-    </mat-form-field>
-    <button (click)="updateUserName()" mat-raised-button color="primary">決定</button>
-  </mat-card-content>
-
-</mat-card>
+      <mat-card-actions class="actions-container">
+        <button (click)="updateUserName()" mat-raised-button color="primary">
+          決定
+        </button>
+      </mat-card-actions>
+    </mat-card-content>
+    <div class="button-under-spacer"></div>
+  </mat-card>
+</div>

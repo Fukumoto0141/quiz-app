@@ -1,4 +1,4 @@
-import { Component, Injectable } from '@angular/core';
+import { Component, Injectable, ViewEncapsulation } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { FirestoreClientService } from 'src/app/service/firestore-client.service';
@@ -10,10 +10,14 @@ import { FirestoreClientService } from 'src/app/service/firestore-client.service
 @Component({
   selector: 'app-entry-dialog',
   templateUrl: './entry-dialog.component.html',
-  styleUrls: ['./entry-dialog.component.scss']
+  styleUrls: ['./entry-dialog.component.scss'],
+  encapsulation: ViewEncapsulation.None,//カプセル化の解除
+
 })
 export class EntryDialogComponent {
   key: string = '';
+  showCursor = true;
+
   constructor(
     public dialogRef: MatDialogRef<EntryDialogComponent>,
     private router: Router,

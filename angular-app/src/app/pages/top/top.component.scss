@@ -1,13 +1,116 @@
-.container {
+.page-size{
+  width: 100vw;
+  height: 100svh;
+  position: relative;
+}
+
+.top-menu{
+  position: absolute;
+  z-index: 1;
+
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  button{
-    height: 33vh;
-    width: 25vw;
-    margin: 5vw;
-    border-radius: 50px;
-    font-size: 50px;
+  flex-wrap: wrap;
+
+  width: 100%;
+  .user-name-chip{
+    margin: 10px;
+  }
+  .title{
+    font-size: min(6vw, 6svh);
+    font-weight: bold;
+
+    margin-top: 5px;
+    margin-left: 20px;
+    margin-right: auto;
+    font-family: 'DotGothic16', sans-serif;
+    user-select: none;
   }
 }
+
+.main-screen{
+  position: absolute;
+  width: 100vw;
+  height: 100svh;
+}
+
+.actions-container{
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+
+  background-image: url(/assets/images/gahag-0046592908.jpeg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+
+  @media screen and (max-width:480px) {
+    background-image: url(/assets/images/publicdomainq-0034839wwylnc.png);
+    background-repeat: no-repeat;
+    background-size: 375%;
+    background-position: center;
+  }
+
+  filter: drop-shadow(5px 5px 5px #000000);
+
+
+  width: 80%;
+  height: 80svh;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+
+
+  .button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: max(20vw, 31svh);
+    width: max(20vw, 31svh);
+
+    margin-block: 10px;
+    margin-inline: 5vw;
+
+    background-image: url(/assets/images/button/kami1.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    filter: drop-shadow(5px 5px 5px #000000);
+
+    .button-text{
+      font-family: 'DotGothic16', sans-serif;
+      font-size: min(12vw,50px);
+      font-weight: bold;
+
+      position: relative;
+      top: -10px;
+    }
+
+  }
+  .button:hover{
+    background-image: url(/assets/images/button/kami2.png);
+  }
+  .font-yellow{
+    color: #ffd500;
+  }
+  .font-red{
+    color: #ff0000;
+  }
+}
+// .container {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   height: 100%;
+//   button{
+//     height: 33vh;
+//     width: 25vw;
+//     margin: 5vw;
+//     border-radius: 50px;
+//     font-size: 50px;
+//   }
+// }
